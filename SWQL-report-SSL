@@ -6,3 +6,23 @@ FROM Orion.Nodes AS [nodes]
 INNER JOIN Orion.APM.CurrentStatistics AS [cert]
     ON [cert].NodeID = [nodes].NodeID
 where [cert].ComponentStatisticData < 30
+
+
+
+--KPI Warning
+SELECT count (nodeid) as Qty
+FROM Orion.APM.CurrentStatistics as [cert]
+where [cert].ComponentStatisticData >= 10 AND [cert].ComponentStatisticData <= 20
+
+
+--KPI INFO
+SELECT count (nodeid) as Qty
+FROM Orion.APM.CurrentStatistics as [cert]
+where [cert].ComponentStatisticData >= 20
+
+--KPI Critical 
+SELECT count (nodeid) as Qty
+FROM Orion.APM.CurrentStatistics as [cert]
+where [cert].ComponentStatisticData <= 10
+
+
