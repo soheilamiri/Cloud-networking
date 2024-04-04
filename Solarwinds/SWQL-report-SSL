@@ -1,4 +1,4 @@
--- by soheil.amiri 
+-- code for Certificate Expiration Alert
 SELECT [Stats].ComponentStatisticData
      , [Stats].Component.DisplayName AS [ComponentName]
      , [Stats].Component.Application.DisplayName AS [ApplicationName]
@@ -10,20 +10,22 @@ WHERE [Stats].ComponentStatisticData < 70
   AND [Stats].Component.Application.DisplayName = 'SSL Certificate Expiration - CI, CN, and Expiry Date'
 
 
+
 --KPI Warning
 SELECT count (nodeid) as Qty
 FROM Orion.APM.CurrentStatistics as [cert]
 where [cert].ComponentStatisticData >= 10 AND [cert].ComponentStatisticData <= 20
-
+AND [cert].Component.Application.DisplayName = 'SSL Certificate Expiration - CI, CN, and Expiry Date'
 
 --KPI INFO
 SELECT count (nodeid) as Qty
 FROM Orion.APM.CurrentStatistics as [cert]
-where [cert].ComponentStatisticData >= 20
+where [cert].ComponentStatisticData >= 30
+AND [cert].Component.Application.DisplayName = 'SSL Certificate Expiration - CI, CN, and Expiry Date'
 
 --KPI Critical 
 SELECT count (nodeid) as Qty
 FROM Orion.APM.CurrentStatistics as [cert]
 where [cert].ComponentStatisticData <= 10
-
+AND [cert].Component.Application.DisplayName = 'SSL Certificate Expiration - CI, CN, and Expiry Date'
 
