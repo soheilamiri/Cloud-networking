@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfApplicationTemplate xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.solarwinds.com/2007/08/APM">
+	<ApplicationTemplate>
+		<Settings xmlns:s="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+			<s:KeyValueOfstringSettingValueyR_SGpLPx>
+				<s:Key>__DebugLoggingEnabled</s:Key>
+				<s:Value>
+					<Required>true</Required>
+					<SettingLevel>Template</SettingLevel>
+					<Value>False</Value>
+					<ValueType>Boolean</ValueType>
+					<Key i:nil="true" />
+				</s:Value>
+			</s:KeyValueOfstringSettingValueyR_SGpLPx>
+			<s:KeyValueOfstringSettingValueyR_SGpLPx>
+				<s:Key>__NumberOfLogFilesToKeep</s:Key>
+				<s:Value>
+					<Required>true</Required>
+					<SettingLevel>Template</SettingLevel>
+					<Value>30</Value>
+					<ValueType>Integer</ValueType>
+					<Key i:nil="true" />
+				</s:Value>
+			</s:KeyValueOfstringSettingValueyR_SGpLPx>
+			<s:KeyValueOfstringSettingValueyR_SGpLPx>
+				<s:Key>__Timeout</s:Key>
+				<s:Value>
+					<Required>true</Required>
+					<SettingLevel>Template</SettingLevel>
+					<Value>300</Value>
+					<ValueType>Integer</ValueType>
+					<Key i:nil="true" />
+				</s:Value>
+			</s:KeyValueOfstringSettingValueyR_SGpLPx>
+			<s:KeyValueOfstringSettingValueyR_SGpLPx>
+				<s:Key>__Use64Bit</s:Key>
+				<s:Value>
+					<Required>true</Required>
+					<SettingLevel>Template</SettingLevel>
+					<Value>True</Value>
+					<ValueType>Boolean</ValueType>
+					<Key i:nil="true" />
+				</s:Value>
+			</s:KeyValueOfstringSettingValueyR_SGpLPx>
+		</Settings>
+		<ComponentTemplates>
+			<ComponentTemplate>
+				<ComponentOrder>1</ComponentOrder>
+				<Id>4644</Id>
+				<Name>NOC-Certificate-Expiation</Name>
+				<Settings xmlns:s="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+					<s:KeyValueOfstringSettingValueyR_SGpLPx>
+						<s:Key>__Disabled</s:Key>
+						<s:Value>
+							<Required>false</Required>
+							<SettingLevel>Template</SettingLevel>
+							<Value>False</Value>
+							<ValueType>Boolean</ValueType>
+							<Key>__Disabled</Key>
+						</s:Value>
+					</s:KeyValueOfstringSettingValueyR_SGpLPx>
+					<s:KeyValueOfstringSettingValueyR_SGpLPx>
+						<s:Key>__CredentialSetId</s:Key>
+						<s:Value>
+							<Required>false</Required>
+							<SettingLevel>Template</SettingLevel>
+							<Value>0</Value>
+							<ValueType>String</ValueType>
+							<Key>__CredentialSetId</Key>
+						</s:Value>
+					</s:KeyValueOfstringSettingValueyR_SGpLPx>
+					<s:KeyValueOfstringSettingValueyR_SGpLPx>
+						<s:Key>__UserDescription</s:Key>
+						<s:Value>
+							<Required>false</Required>
+							<SettingLevel>Template</SettingLevel>
+							<Value>Windows Powershell Script to check remote web SSL Certificate Expiration date.</Value>
+							<ValueType>String</ValueType>
+							<Key>__UserDescription</Key>
+						</s:Value>
+					</s:KeyValueOfstringSettingValueyR_SGpLPx>
+					<s:KeyValueOfstringSettingValueyR_SGpLPx>
+						<s:Key>__UserNotes</s:Key>
+						<s:Value>
+							<Required>false</Required>
+							<SettingLevel>Template</SettingLevel>
+							<Value></Value>
+							<ValueType>String</ValueType>
+							<Key>__UserNotes</Key>
+						</s:Value>
+					</s:KeyValueOfstringSettingValueyR_SGpLPx>
+					<s:KeyValueOfstringSettingValueyR_SGpLPx>
+						<s:Key>CountAsDifference</s:Key>
+						<s:Value>
+							<Required>false</Required>
+							<SettingLevel>Template</SettingLevel>
+							<Value>false</Value>
+							<ValueType>Boolean</ValueType>
+							<Key>CountAsDifference</Key>
+						</s:Value>
+					</s:KeyValueOfstringSettingValueyR_SGpLPx>
+					<s:KeyValueOfstringSettingValueyR_SGpLPx>
+						<s:Key>ExecutionMode</s:Key>
+						<s:Value>
+							<Required>false</Required>
+							<SettingLevel>Template</SettingLevel>
+							<Value>LocalHost</Value>
+							<ValueType>Option</ValueType>
+							<Key>ExecutionMode</Key>
+						</s:Value>
+					</s:KeyValueOfstringSettingValueyR_SGpLPx>
+					<s:KeyValueOfstringSettingValueyR_SGpLPx>
+						<s:Key>ImpersonateForLocalMode</s:Key>
+						<s:Value>
+							<Required>false</Required>
+							<SettingLevel>Template</SettingLevel>
+							<Value>false</Value>
+							<ValueType>Boolean</ValueType>
+							<Key>ImpersonateForLocalMode</Key>
+						</s:Value>
+					</s:KeyValueOfstringSettingValueyR_SGpLPx>
+					<s:KeyValueOfstringSettingValueyR_SGpLPx>
+						<s:Key>ScriptArguments</s:Key>
+						<s:Value>
+							<Required>false</Required>
+							<SettingLevel>Template</SettingLevel>
+							<Value>${Node.DNS}</Value>
+							<ValueType>String</ValueType>
+							<Key>ScriptArguments</Key>
+						</s:Value>
+					</s:KeyValueOfstringSettingValueyR_SGpLPx>
+					<s:KeyValueOfstringSettingValueyR_SGpLPx>
+						<s:Key>ScriptBody</s:Key>
+						<s:Value>
+							<Required>true</Required>
+							<SettingLevel>Template</SettingLevel>
+							<Value>#running command : &amp; '.\check SSL Expiration.ps1' abris.cloud | FL
+
+[CmdletBinding()]
+param (
+    [Parameter(Mandatory=$true)]
+    [string]
+    $Url,
+
+    [int]
+    $Port = 443
+)
+
+#Region Define Exite code
+$ExitCode=@{
+    Up=0
+    Down=1
+    Warning=2
+    Critical=3
+    Unknown=4
+}
+
+$Certificate = $null
+$TcpClient = New-Object -TypeName System.Net.Sockets.TcpClient
+try {
+
+    $TcpClient.Connect($Url, $Port)
+    $TcpStream = $TcpClient.GetStream()
+
+    $Callback = { param($sender, $cert, $chain, $errors) return $true }
+
+    $SslStream = New-Object -TypeName System.Net.Security.SslStream -ArgumentList @($TcpStream, $true, $Callback)
+    try {
+
+        $SslStream.AuthenticateAsClient('')
+        $Certificate = $SslStream.RemoteCertificate
+
+    } finally {
+        $SslStream.Dispose()
+    }
+
+} finally {
+    $TcpClient.Dispose()
+}
+
+if ($Certificate) {
+    if ($Certificate -isnot [System.Security.Cryptography.X509Certificates.X509Certificate2]) {
+        $Certificate = New-Object -TypeName System.Security.Cryptography.X509Certificates.X509Certificate2 -ArgumentList $Certificate
+    }
+
+    #Write-Output $Certificate 
+    #Write-Output $Certificate.NotAfter
+}
+
+if ([string]::IsNullOrWhiteSpace($Certificate.NotAfter)) {
+$status = 'critical'
+}
+else {
+#days difference between two dates
+$edate = $Certificate.NotAfter
+$sdate = get-date -Format MM/dd/yyyy
+$timediff = New-TimeSpan -Start $sdate -End $edate
+Write-host "Message.CERT: $Url"
+Write-host "Statistic.CERT: $(($timediff.Days)-1)"
+$status = "up"
+}
+
+# In a component monitor, you'll need to send back an exit code
+exit $ExitCode[$Status]</Value>
+							<ValueType>External</ValueType>
+							<Key>ScriptBody</Key>
+						</s:Value>
+					</s:KeyValueOfstringSettingValueyR_SGpLPx>
+					<s:KeyValueOfstringSettingValueyR_SGpLPx>
+						<s:Key>StatusRollupType</s:Key>
+						<s:Value>
+							<Required>true</Required>
+							<SettingLevel>Template</SettingLevel>
+							<Value>Worst</Value>
+							<ValueType>Option</ValueType>
+							<Key>StatusRollupType</Key>
+						</s:Value>
+					</s:KeyValueOfstringSettingValueyR_SGpLPx>
+					<s:KeyValueOfstringSettingValueyR_SGpLPx>
+						<s:Key>WrmPort</s:Key>
+						<s:Value>
+							<Required>true</Required>
+							<SettingLevel>Template</SettingLevel>
+							<Value>5985</Value>
+							<ValueType>Integer</ValueType>
+							<Key>WrmPort</Key>
+						</s:Value>
+					</s:KeyValueOfstringSettingValueyR_SGpLPx>
+					<s:KeyValueOfstringSettingValueyR_SGpLPx>
+						<s:Key>WrmUrlPrefix</s:Key>
+						<s:Value>
+							<Required>true</Required>
+							<SettingLevel>Template</SettingLevel>
+							<Value>wsman</Value>
+							<ValueType>String</ValueType>
+							<Key>WrmUrlPrefix</Key>
+						</s:Value>
+					</s:KeyValueOfstringSettingValueyR_SGpLPx>
+					<s:KeyValueOfstringSettingValueyR_SGpLPx>
+						<s:Key>WrmUseSSL</s:Key>
+						<s:Value>
+							<Required>false</Required>
+							<SettingLevel>Template</SettingLevel>
+							<Value>false</Value>
+							<ValueType>Boolean</ValueType>
+							<Key>WrmUseSSL</Key>
+						</s:Value>
+					</s:KeyValueOfstringSettingValueyR_SGpLPx>
+				</Settings>
+				<Type>PowerShell</Type>
+				<Thresholds />
+				<EvidenceType>None</EvidenceType>
+				<CategoryDisplayName></CategoryDisplayName>
+				<ComponentCategoryId i:nil="true" />
+				<DynamicColumnSettings>
+					<DynamicEvidenceColumnSchema>
+						<Cells />
+						<ComponentID>-1</ComponentID>
+						<ComponentTemplateID>4644</ComponentTemplateID>
+						<DataTransform />
+						<DataTransformOverridden>false</DataTransformOverridden>
+						<Disabled>false</Disabled>
+						<ID>2463</ID>
+						<Label>Details</Label>
+						<LabelOverridden>false</LabelOverridden>
+						<Name>CERT</Name>
+						<ParentID>-1</ParentID>
+						<Threshold>
+							<AreHigherValuesBetter>false</AreHigherValuesBetter>
+							<BaselineApplyError></BaselineApplyError>
+							<ComputeBaseline>true</ComputeBaseline>
+							<CriticalFormula></CriticalFormula>
+							<CriticalLevel>1.7976931348623157E+308</CriticalLevel>
+							<CriticalPolls>1</CriticalPolls>
+							<CriticalPollsInterval>1</CriticalPollsInterval>
+							<IsForParentComponent>false</IsForParentComponent>
+							<IsForTemplate>false</IsForTemplate>
+							<MaxValue>100</MaxValue>
+							<Name></Name>
+							<WarnLevel>1.7976931348623157E+308</WarnLevel>
+							<WarningFormula></WarningFormula>
+							<WarningPolls>1</WarningPolls>
+							<WarningPollsInterval>1</WarningPollsInterval>
+							<ThresholdOperator>Greater</ThresholdOperator>
+						</Threshold>
+						<ThresholdOverridden>false</ThresholdOverridden>
+						<Type>String</Type>
+					</DynamicEvidenceColumnSchema>
+					<DynamicEvidenceColumnSchema>
+						<Cells />
+						<ComponentID>-1</ComponentID>
+						<ComponentTemplateID>4644</ComponentTemplateID>
+						<DataTransform>
+							<CheckedRadioButton>1</CheckedRadioButton>
+							<CommonFormulaOptions>0</CommonFormulaOptions>
+							<TransformExpression></TransformExpression>
+						</DataTransform>
+						<DataTransformOverridden>false</DataTransformOverridden>
+						<Disabled>false</Disabled>
+						<ID>2473</ID>
+						<Label>Details</Label>
+						<LabelOverridden>false</LabelOverridden>
+						<Name>CERT</Name>
+						<ParentID>-1</ParentID>
+						<Threshold>
+							<AreHigherValuesBetter>false</AreHigherValuesBetter>
+							<BaselineApplyError></BaselineApplyError>
+							<ComputeBaseline>true</ComputeBaseline>
+							<CriticalFormula></CriticalFormula>
+							<CriticalLevel>10</CriticalLevel>
+							<CriticalPolls>1</CriticalPolls>
+							<CriticalPollsInterval>1</CriticalPollsInterval>
+							<IsForParentComponent>false</IsForParentComponent>
+							<IsForTemplate>false</IsForTemplate>
+							<MaxValue>100</MaxValue>
+							<Name></Name>
+							<WarnLevel>20</WarnLevel>
+							<WarningFormula></WarningFormula>
+							<WarningPolls>1</WarningPolls>
+							<WarningPollsInterval>1</WarningPollsInterval>
+							<ThresholdOperator>Equal</ThresholdOperator>
+						</Threshold>
+						<ThresholdOverridden>false</ThresholdOverridden>
+						<Type>Numeric</Type>
+					</DynamicEvidenceColumnSchema>
+				</DynamicColumnSettings>
+				<VisibilityMode>Visible</VisibilityMode>
+				<ShortName></ShortName>
+				<ApplicationItemType></ApplicationItemType>
+				<ApplicationTemplateId>288</ApplicationTemplateId>
+				<UniqueId>1c781043-86a5-4a4f-bc7b-0bc63c27368f</UniqueId>
+				<ComponentCategoryName i:nil="true" />
+				<IsApplicationItemSpecific>false</IsApplicationItemSpecific>
+			</ComponentTemplate>
+		</ComponentTemplates>
+		<DeletedComponentTemplates />
+		<Id>288</Id>
+		<Name>NOC-Certificate-expiration</Name>
+		<IsMockTemplate>false</IsMockTemplate>
+		<Description>Powershell Script that will calculate the remaining of your certificate.</Description>
+		<Tags>
+			<TagInfo>
+				<Name>Certificate</Name>
+				<TemplateID>288</TemplateID>
+			</TagInfo>
+			<TagInfo>
+				<Name>PowerShell</Name>
+				<TemplateID>288</TemplateID>
+			</TagInfo>
+			<TagInfo>
+				<Name>Script</Name>
+				<TemplateID>288</TemplateID>
+			</TagInfo>
+			<TagInfo>
+				<Name>SSL</Name>
+				<TemplateID>288</TemplateID>
+			</TagInfo>
+			<TagInfo>
+				<Name>Windows</Name>
+				<TemplateID>288</TemplateID>
+			</TagInfo>
+		</Tags>
+		<Created>2024-05-11T12:49:13.003Z</Created>
+		<LastModified>2024-05-13T05:48:34.793Z</LastModified>
+		<CustomApplicationType i:nil="true" />
+		<Version>1.0</Version>
+		<ViewID>318</ViewID>
+		<ViewXml>
+			<View Columns="2" ColumnWidth1="772" ColumnWidth2="600" ColumnWidth3="0" Customizable="true" Group="10000023" GroupName="Copy (4) of Application Details (1)" GroupPosition="1" Icon="Overview.png" Key="NOC_Certificate-expiration Application Details" System="false" Title="Summary" Type="APM Application Details" xmlns="http://solarwinds.com/orion/web/view/1">
+				<Resources xmlns="">
+					<Resource Column="1" File="~/Orion/APM/Resources/Application/ApplicationDetails.ascx" Name="APM Application Details" Position="1" SubTitle="" Title="Application Details">
+						<Properties>
+							<Property Name="defaulttitle" Value="Application Details"></Property>
+						</Properties>
+					</Resource>
+					<Resource Column="1" File="~/Orion/APM/Resources/Application/ApplicationEvents.ascx" Name="Last XX Application Events" Position="2" SubTitle="" Title="Last XX Application Events">
+						<Properties>
+							<Property Name="defaulttitle" Value="Last XX Application Events"></Property>
+						</Properties>
+					</Resource>
+					<Resource Column="1" File="~/Orion/APM/Resources/Application/ApplicationAlerts.ascx" Name="Active Application Alerts" Position="3" SubTitle="" Title="Active Application Alerts">
+						<Properties>
+							<Property Name="defaulttitle" Value="Active Application Alerts"></Property>
+						</Properties>
+					</Resource>
+					<Resource Column="1" File="~/Orion/NetPerfMon/Resources/NodeDetails/NodeDetails.ascx" Name="Node Details" Position="4" SubTitle="" Title="Summary">
+						<Properties>
+							<Property Name="defaulttitle" Value="Summary"></Property>
+						</Properties>
+					</Resource>
+					<Resource Column="1" File="~/Orion/APM/Resources/Application/ApplicationCustomProperties.ascx" Name="Application Custom Properties" Position="5" SubTitle="" Title="Application Custom Properties">
+						<Properties>
+							<Property Name="defaulttitle" Value="Application Custom Properties"></Property>
+						</Properties>
+					</Resource>
+					<Resource Column="1" File="/Orion/APM/Resources/Application/AvailabilityStatistics.ascx" Name="Availability Statistics" Position="6" SubTitle="" Title="Availability Statistics">
+						<Properties>
+							<Property Name="defaulttitle" Value="Availability Statistics"></Property>
+						</Properties>
+					</Resource>
+					<Resource Column="2" File="~/Orion/APM/Resources/Application/AllPortMonitors.ascx" Name="Components" Position="1" SubTitle="" Title="Components">
+						<Properties>
+							<Property Name="defaulttitle" Value="Components"></Property>
+						</Properties>
+					</Resource>
+					<Resource Column="2" File="~/Orion/APM/Resources/Application/AllProcessAndServiceMonitors.ascx" Name="Processes and Services" Position="2" SubTitle="" Title="Processes and Services">
+						<Properties>
+							<Property Name="defaulttitle" Value="Processes and Services"></Property>
+						</Properties>
+					</Resource>
+					<Resource Column="2" File="~/Orion/NetPerfMon/Resources/Misc/XuiWrapper.ascx" Name="Application Connections" Position="3" SubTitle="Dependencies - Shows Connection Quality To/From Apps &amp; Nodes" Title="Application Connections">
+						<Properties>
+							<Property Name="selector" Value="samadm-connections-widget"></Property>
+							<Property Name="scriptpaths" Value="/ui/modules/sam-adm-incoming-connections-resource/js/widgets/connectionsWidget.min.js"></Property>
+							<Property Name="helplinkfragment" Value="OrionSamAdmNodesResource"></Property>
+							<Property Name="defaulttitle" Value="Application Connections"></Property>
+							<Property Name="stylepaths" Value="/ui/modules/sam-adm-incoming-connections-resource/css/widgets/connectionsWidget.min.css"></Property>
+							<Property Name="visibilityconfiguration" Value="{&quot;url&quot;:&quot;adm/web/issues/AdmExists&quot;}"></Property>
+						</Properties>
+					</Resource>
+					<Resource Column="2" File="~/Orion/NetPerfMon/Resources/AppStack/AppStack.ascx" Name="Environment for ${Caption}" Position="4" SubTitle="" Title="AppStack Environment for ${Caption}">
+						<Properties>
+							<Property Name="defaulttitle" Value="AppStack Environment for ${Caption}"></Property>
+						</Properties>
+					</Resource>
+					<Resource Column="2" File="/Orion/APM/Resources/Charting/AvailabilityChart.ascx" Name="Application Availability" Position="5" SubTitle="" Title="Application Availability">
+						<Properties>
+							<Property Name="netobjectprefix" Value="AAAA"></Property>
+							<Property Name="chartsubtitle" Value="${ZoomRange}"></Property>
+							<Property Name="chartname" Value="APMApplicationAvailability"></Property>
+							<Property Name="chartdatespan" Value="1"></Property>
+							<Property Name="samplesize" Value="60"></Property>
+							<Property Name="showtitle" Value="1"></Property>
+							<Property Name="defaulttitle" Value="Application Availability"></Property>
+							<Property Name="charttitle" Value="${Caption}"></Property>
+						</Properties>
+					</Resource>
+					<Resource Column="2" File="~/Orion/NetPerfMon/Resources/NodeDetails/CPUMemory.ascx" Name="CPU Load &amp; Memory Statistics" Position="6" SubTitle="" Title="CPU Load &amp;amp; Memory Statistics">
+						<Properties>
+							<Property Name="defaulttitle" Value="CPU Load &amp;amp; Memory Statistics"></Property>
+						</Properties>
+					</Resource>
+				</Resources>
+			</View>
+		</ViewXml>
+		<ModuleVersion xmlns:d="http://schemas.datacontract.org/2004/07/System">
+			<d:_Build>0</d:_Build>
+			<d:_Major>2024</d:_Major>
+			<d:_Minor>1</d:_Minor>
+			<d:_Revision>0</d:_Revision>
+		</ModuleVersion>
+		<UniqueId>a3af128c-5dfd-49b4-9035-782e318ef563</UniqueId>
+	</ApplicationTemplate>
+</ArrayOfApplicationTemplate>
