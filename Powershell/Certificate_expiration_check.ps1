@@ -1,5 +1,4 @@
-#running command : & '.\check SSL Expiration.ps1' abris.cloud | FL
-# & '.\check SSL Expiration.ps1' msn.com | Select-Object NotBefore,NotAfter | fl
+# Example: .\Certificate_expiration_check.ps1 chat.lalavij.ir | fl
 [CmdletBinding()]
 param (
     [Parameter(Mandatory=$true)]
