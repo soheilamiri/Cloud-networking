@@ -1,0 +1,13 @@
+--using Solarwinds SWQL Studio to test and change
+SELECT 
+     [node].MachineType
+    ,[node].caption
+    ,[node].StatusLED
+    ,[node].Status
+FROM Orion.Nodes AS [node]
+WHERE [node].Status != 1 
+AND (
+        ( [node].MachineType LIKE 'VMware ESX Server') OR
+        ( [node].MachineType LIKE 'Integrated-Lights-Out')
+    )
+    
