@@ -1,0 +1,12 @@
+SELECT 
+      node.Name
+    , node.FullyQualifiedName
+    , node.HardwareCategoryID
+    , node.StatusDescription
+    , node.DetailsUrl
+FROM Orion.HardwareHealth.HardwareItemBase node
+where node.StatusDescription!= 'Up'
+And (
+        (node.Name NOT LIKE '%ethernet%') AND
+        (node.Name NOT LIKE '%Receive%')
+    )
