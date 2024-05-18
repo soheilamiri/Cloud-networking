@@ -1,0 +1,9 @@
+#title:  Conditional Forwarding 
+#file path: /etc/bind/named.conf.options
+
+
+zone "damavand.cloud" {
+        type forward;
+        forwarders { 172.17.11.3; };
+};
+
