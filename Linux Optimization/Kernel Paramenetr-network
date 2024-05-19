@@ -1,0 +1,71 @@
+
+#file path: /etc/sysctl.d/Soheil_optimization.conf
+### The maximum number of open files on the Linux .We generally tune this file to improve the number of open files by increasing the value of /proc/sys/fs/file-max to something reasonable like 256 for every 4M of RAM we have
+fs.file-max=26234859
+### The Linux kernel provides the Asynchronous non-blocking I/O (AIO) feature that allows a process to initiate multiple I/O operations simultaneously without having to wait for any of them to complete. This helps boost performance for applications that are able to overlap processing and I/O. The aio-max-nr parameter determines the maximum number of allowable concurrent I/O requests.
+fs.aio-max-nr=5000000
+### The maximum number of processes that can be run at any given time. Increasing the value will help on large Linux system or clusters to ease process identification and process management. The value can only be extended up to a theoretical maximum of 32768 for 32 bit systems or 4194304 for 64 bit.
+kernel.pid_max = 4194303
+### The number of threads (tasks) that can be created on the system.
+kernel.threads-max=2097152
+vm.swappiness=10
+vm.max_map_count=524288
+vm.min_free_kbytes=4194303
+vm.vfs_cache_pressure=10
+vm.zone_reclaim_mode=0
+vm.dirty_ratio=80
+vm.dirty_background_ratio=3
+### Turn timestamps off to reduce performance spikes related to timestamp generation. (Set to 0)
+net.ipv4.tcp_timestamps=0
+### Enable the TCP selective acks option for better throughput. (Set to 1)
+net.ipv4.tcp_sack=1
+### Increase the maximum length of processor input queues.
+net.core.netdev_max_backlog=250000
+### Maximal number of remembered connection requests, which have not received an acknowledgment from connecting client. The minimal value is 128 for low memory machines, and it will increase in proportion to the memory of machine. If server suffers from overload, try increasing this number.
+net.ipv4.tcp_max_syn_backlog=100000
+### Increase the TCP maximum and default buffer sizes
+net.core.rmem_max=4194304
+net.core.wmem_max=4194304
+net.core.rmem_default=4194304
+net.core.wmem_default=4194304
+net.core.optmem_max=4194304
+### Enable low latency mode for TCP.
+net.ipv4.tcp_low_latency=1
+### The following variable is used to tell the kernel how much of the socket buffer space should be used for TCP window size, and how much to save for an application buffer. A value of 1 means the socket buffer will be divided evenly between TCP windows size and application.
+net.ipv4.tcp_adv_win_scale=1
+### By default, TCP saves various connection metrics in the route cache when the connection closes, so that connections established in the near future can use these to set initial conditions. Usually, this increases overall performance, but may sometimes cause performance degradation. If set, TCP will not cache metrics on closing connections.
+net.ipv4.tcp_no_metrics_save=1
+### Send redirects, if router. send_redirects for the interface will be enabled if at least one of conf/{all,interface}/send_redirects is set to TRUE, it will be disabled otherwise Default: TRUE
+net.ipv4.conf.all.send_redirects=0
+### Accept packets with SRR option. conf/all/accept_source_route must also be set to TRUE to accept packets with SRR option on the interface default TRUE (router) FALSE (host)
+net.ipv4.conf.all.accept_source_route=0
+### If set non-zero, then the kernel will ignore all ICMP ECHO and TIMESTAMP requests sent to it via broadcast/multicast. Default: 1
+net.ipv4.icmp_echo_ignore_broadcasts=1
+### By default, TCP saves various connection metrics in the route cache when the connection closes, so that connections established in the near future can use these to set initial conditions. Usually, this increases overall performance, but may sometimes cause performance degradation. If set, TCP will not cache metrics on closing connections.
+net.ipv4.tcp_no_metrics_save=1
+### The length of time an orphaned (no longer referenced by any application) connection will remain in the FIN_WAIT_2 state before it is aborted at the local end. While a perfectly valid “receive only” state for an un-orphaned connection, an orphaned connection in FIN_WAIT_2 state could otherwise wait forever for the remote to close its end of the connection. Cf. tcp_max_orphans Default: 60 seconds
+net.ipv4.tcp_fin_timeout=10
+### Increase memory thresholds to prevent packet dropping.
+net.ipv4.tcp_rmem = 4096    4194304   16777216
+net.ipv4.tcp_wmem = 4096    4194304   16777216
+###  If unset, the congestion window will not be timed out after an idle period. Default: 1
+net.ipv4.tcp_slow_start_after_idle = 1
+### This is to prevent against the common ‘SYN flood attack’ Default: 1
+net.ipv4.tcp_syncookies = 1
+### maximum established sockets (with an ACK) waiting to be accepted by listening process
+net.core.somaxconn = 50000
+# recommended for hosts with jumbo frames enabled
+net.ipv4.tcp_mtu_probing=1
+# the minimum number of stored ARP records
+net.ipv4.neigh.default.gc_thresh1 = 2048
+net.ipv4.neigh.default.gc_thresh2 = 4096
+net.ipv4.neigh.default.gc_thresh3 = 8192
+#####
+net.core.default_qdisc=fq
+net.ipv4.tcp_congestion_control=bbr
+#####
+#disbale Reverse path forwarding
+net.ipv4.conf.default.rp_filter=1
+net.ipv4.conf.all.rp_filter=1
+
+
