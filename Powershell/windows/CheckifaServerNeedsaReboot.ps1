@@ -1,7 +1,7 @@
 
 $Creds=Get-Credential
 
-$remotsession=New-PSSession -ComputerName 172.16.144.18 -Credential $Creds
+$remotsession=New-PSSession -ComputerName 192.168.75.231 -Credential $Creds
 Invoke-Command -Session $remotsession -ScriptBlock {
     function Test-PendingReboot
     {
