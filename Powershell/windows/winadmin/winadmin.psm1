@@ -4,7 +4,11 @@ function winadmin-applyposttask {
 }
 
 function winadmin-PendingReboot {
-        
+        <#
+            .DESCRIPTION
+            this is description for pendingreboot command by Michael Simons from ilovepowershell.com
+
+        #>
          if (Get-ChildItem "HKLM:\Software\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending" -EA Ignore) { return $true }
          if (Get-Item "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired" -EA Ignore) { return $true }
          if (Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager" -Name PendingFileRenameOperations -EA Ignore) { return $true }
