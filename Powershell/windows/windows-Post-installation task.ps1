@@ -11,8 +11,8 @@
 
 #>
 #Server parameter INPUT
-$servername="ent-AD-1"
-$remotehosts="172.29.249.218"
+$servername="temp-1"
+$remotehosts="172.25.12.132"
 $Creds=Get-Credential
 
 #prepare Deployer configuration

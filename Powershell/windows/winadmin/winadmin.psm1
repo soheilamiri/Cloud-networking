@@ -1,7 +1,3 @@
-function winadmin-applyposttask {
-        
-    Write-Output "this is post installation task "
-}
 
 function winadmin-PendingReboot {
         <#
