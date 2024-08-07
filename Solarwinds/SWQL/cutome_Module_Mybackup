@@ -1,0 +1,8 @@
+SELECT    
+         [table].ComponentName
+        ,[table].ComponentMessage
+        ,[table].MultiValueStatistics
+
+FROM Orion.APM.ComponentAlert AS [table]
+-- find component ID from Orion.APM.CurrentStatistics table
+WHERE [table].ApplicationID = 35
