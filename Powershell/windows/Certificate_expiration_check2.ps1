@@ -1,4 +1,4 @@
-# Example: .\Certificate_expiration_check.ps1 chat.lalavij.ir | fl
+# Example: .\Certificate_expiration_check2.ps1 -filepath .\URLlist.txt | fl
 [CmdletBinding()]
 param (
     [Parameter(Mandatory=$true)]
