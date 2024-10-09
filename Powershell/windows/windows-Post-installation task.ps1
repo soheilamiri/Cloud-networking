@@ -12,16 +12,16 @@
 #>
 #Server parameter INPUT
 $servername="temp-1"
-$remotehosts="172.25.12.132"
+$remotehosts="172.18.97.207"
 $Creds=Get-Credential
 $newuser = "sysadmin"
 
 #prepare Deployer configuration
-set-Item WSMan:\localhost\Client\TrustedHosts -Value $remotehosts -force
+#set-Item WSMan:\localhost\Client\TrustedHosts -Value $remotehosts -force
 $remotsession=New-PSSession -ComputerName $remotehosts -Credential $Creds -Name rtunnel
 $remotsession
 #copy files to remote host
-Copy-Item "E:\Software\05- cloud\02- microsoft\PowerShell-7.4.3-win-x64.msi" -Destination "C:\Users\Administrator\AppData\Local\Temp\" -ToSession $remotsession
+Copy-Item "E:\Software\05- cloud\02- microsoft\PowerShell-7.4.4-win-x64.msi" -Destination "C:\Users\Administrator\AppData\Local\Temp\" -ToSession $remotsession
 $remotsession=New-PSSession -ComputerName $remotehosts -Credential $Creds
 
 #1- network config
@@ -35,27 +35,34 @@ Invoke-Command -Session $remotsession -ScriptBlock {
     postconfig-network
 }
 #install Tools
+$remotsession=New-PSSession -ComputerName $remotehosts -Credential $Creds -Name rtunnel
+$remotsession
 Invoke-Command -Session $remotsession -ScriptBlock {
     Write-Output "start configuration on $($env:COMPUTERNAME)"
     function postconfig-tools
     {
+        #install PWSH via diresr URL
         #Invoke-WebRequest -Uri https://aka.ms/install-powershell.ps1 -OutFile install-powershell.ps1; ./install-powershell.ps1
         Write-Output "installing powershell"
-        Start-Process -FilePath "msiexec.exe" -ArgumentList "/i C:\Users\Administrator\AppData\Local\Temp\PowerShell-7.4.3-win-x64.msi /quiet ENABLE_PSREMOTING=1" -Wait -Debug
+        Start-Process -FilePath "msiexec.exe" -ArgumentList "/i C:\Users\Administrator\AppData\Local\Temp\PowerShell-7.4.4-win-x64.msi /quiet ENABLE_PSREMOTING=1" -Wait -Debug
         Start-Sleep -Seconds 10
-        Write-Output "installing powershell"
+        Write-Output "installing choco"
         Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
         Start-Sleep -Seconds 10
         Write-Output "$($env:COMPUTERNAME) will go to check online update repository."
-        choco install powershell-core vim ntop.portable -y --no-progress
+        choco install vim ntop.portable -y --no-progress
+        #to install powershell via choco
+        # choco install powershell-core
         cd c:\Users\Administrator\AppData\Local\Microsoft\powershell\
         .\pwsh.exe -noprofile -command enable-PSRemoting
-        Restart-Computer -Force
+        #Restart-Computer -Force
     }
     postconfig-tools
     }
 
-
+#3- Apply OS configuration
+$remotsession=New-PSSession -ComputerName $remotehosts -Credential $Creds -Name rtunnel
+$remotsession
     Invoke-Command -Session $remotsession -ScriptBlock {
         Write-Output "start configuration on $($env:COMPUTERNAME)"
         function postconfig-os
@@ -65,8 +72,8 @@ Invoke-Command -Session $remotsession -ScriptBlock {
             Add-LocalGroupMember -Group "Administrators" -Member $($using:newuser)
             powercfg /S SCHEME_MIN  # High Performance
             rename-Computer -NewName $($using:servername) -Force
+            Write-Output "$($env:COMPUTERNAME) is going to be restart in 10 sec."
             Start-Sleep -Seconds 10
-            Write-Output "$($env:COMPUTERNAME) is going to be restart in 20 sec."
             Restart-Computer -Force
         }
         postconfig-os
