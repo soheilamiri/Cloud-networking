@@ -25,16 +25,16 @@ if ($job_name -ne $null)
 # Iterate over each job and output its name, last result, and current state
 foreach ($job in $job_name) {
     $jobName = $job.Name
-    $lastResult = (Get-VBRJob -Name $jobName).GetLastResult()
-    $lastState = (Get-VBRJob -Name $jobName).GetLastState()
-    $lastSessionStats = (Get-VBRJob -Name $jobName).FindLastSession()
+    $job_Result = (Get-VBRJob -Name $jobName).GetLastResult()
+    $job_State = (Get-VBRJob -Name $jobName).GetLastState()
+    $job_session = (Get-VBRJob -Name $jobName).FindLastSession()
 
     # Output the job information
     [PSCustomObject]@{
         JobName     = $jobName
-        LastResult  = $lastResult
-        LastState   = $lastState
-        LastSessionStats = $lastSessionStats
+        LastResult  = $job_Result
+        LastState   = $job_State
+        job_session = $job_session
     }
     switch ($job_result) 
     { 
@@ -53,20 +53,28 @@ foreach ($job in $job_name) {
     "Pausing" { $stat2=5 } 
     default { $stat2=6 }
     }
-if ( $lastSessionStats -eq $null )
+if ( $job_session -eq $null )
 { $stat3=$stat4=$stat5=$stat6=0; }
 else
 {
-$stat3=$lastSessionStats.jobtypestring;
-$temp_stat4=$lastSessionStats.CreationTime;
-$temp_stat5=$lastSessionStats.EndTime;
+$stat3=$job_session.jobtypestring;
+$temp_stat4=$job_session.CreationTime;
+$temp_stat5=$job_session.EndTime;
 $stat4 = $temp_stat4.tostring("yyyy.MM.dd HH:mm")
 $stat5 = $temp_stat5.tostring("yyyy.MM.dd HH:mm")
+#Soheil_Debug <
+# $stat1
+# $stat2
+# $stat3
+# $stat4
+# $stat5
+#/> end of debug
 }
-
 }
 # Disconnect from Veeam Backup server
 #Disconnect-VBRServer
+
+
 
 }
     else {
